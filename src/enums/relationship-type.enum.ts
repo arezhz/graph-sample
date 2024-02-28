@@ -1,3 +1,10 @@
 export enum RelationshipTypeEnum {
-    
+  ADDRESS,
+  CALL,
+  MEDIA,
+  PHONE,
+  RELATIVE_AND_CASUSAL_RELATIONSHIP,
+  SHEBA,
+  TRANSFER,
+  TRAVEL_TO,
 }

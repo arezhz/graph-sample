@@ -5,13 +5,11 @@ export interface IResponseBody {
   p: {
     start: INodeBody;
     end: INodeBody;
-    segments: [
-      {
-        start: INodeBody;
-        relationship: IRelationshipBody;
-        end: INodeBody;
-      }
-    ];
+    segments: {
+      start: INodeBody;
+      relationship: IRelationshipBody;
+      end: INodeBody;
+    }[];
     length: number;
   };
 }

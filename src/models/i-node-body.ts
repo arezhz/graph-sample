@@ -1,14 +1,9 @@
 import { NodeLabelEnum } from "../enums/node-label.enum";
+import { IProperties } from "./i-properties";
 
 export interface INodeBody {
   identity: number;
   labels: NodeLabelEnum[];
-  properties: {
-    father_name: string;
-    birth_date: string;
-    last_name: string;
-    national_number: string;
-    first_name: string;
-  };
+  properties: IProperties;
   elementId: string;
 }
