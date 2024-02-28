@@ -9,7 +9,7 @@ customElements.define(
       const response: IResponseBody[] = await getInitData();
       const container = this.createContainerElement();
       const elements = this.createElements(response);
-      const cy = cytoscape({
+      cytoscape({
         container,
         elements,
         style: [
@@ -33,11 +33,10 @@ customElements.define(
             },
           },
         ],
-
+        layout: {
+          name: "cose",
+        },
       });
-      cy.layout({
-        name:  "cose"
-      }).run();
     }
 
     createContainerElement() {
