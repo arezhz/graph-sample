@@ -1,7 +1,12 @@
-import cytoscape, { ElementDefinition, ElementsDefinition } from "cytoscape";
+import cytoscape, {
+  ElementDefinition,
+  ElementsDefinition,
+  Stylesheet,
+} from "cytoscape";
 import { getInitData, containerName } from "./services/initial";
 import { IResponseBody } from "./models/i-response-body";
 import { UtilityService } from "./services/utility";
+import graphStyles from "./services/styles";
 
 customElements.define(
   "graph-element",
@@ -28,8 +33,13 @@ customElements.define(
       };
       if (!Array.isArray(response)) {
         elements.nodes.push({
+          group: "nodes",
           data: {
             id: response.p.start.elementId,
+            name: this.utlityService.getNodeName(
+              response.p.start.labels[0],
+              response.p.start.properties
+            ),
             ...response.p.start,
           },
         });
@@ -37,27 +47,7 @@ customElements.define(
       this.cy = cytoscape({
         container,
         elements,
-        style: [
-          // the stylesheet for the graph
-          {
-            selector: "node",
-            style: {
-              "background-color": "#666",
-              label: "data(id)",
-            },
-          },
-
-          {
-            selector: "edge",
-            style: {
-              width: 3,
-              "line-color": "#ccc",
-              "target-arrow-color": "#ccc",
-              "target-arrow-shape": "triangle",
-              "curve-style": "bezier",
-            },
-          },
-        ],
+        style: graphStyles as unknown as Stylesheet[],
         layout: {
           name: "cose",
         },

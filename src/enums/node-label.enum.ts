@@ -1,8 +1,8 @@
 export enum NodeLabelEnum {
-  Address,
-  Country,
-  Person,
-  SIMCard,
-  Sheba,
-  SocialAccount,
+  Address = "Address",
+  Country = "Country",
+  Person = "Person",
+  SIMCard = "SIMCard",
+  Sheba = "Sheba",
+  SocialAccount = "SocialAccount",
 }
