@@ -45,6 +45,7 @@ customElements.define(
           style: this.utlityService.getNodeStyle(response.p.start.labels[0])
         });
       }
+      
       this.cy = cytoscape({
         container,
         elements,
