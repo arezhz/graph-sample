@@ -1,6 +1,15 @@
-export const containerName = "graph_container"
+import { IResponseBody } from "./models/i-response-body";
 
-export async function getInitData() {
-  const data = await fetch("../public/fiu_json.json");
-  return await data.json();
+export const containerName = "graph_container";
+
+export async function getInitData(
+  id?: string
+): Promise<IResponseBody | IResponseBody[]> {
+  const response = await fetch("../public/fiu_json.json");
+  const data: IResponseBody[] = await response.json();
+  if (!id) {
+    return data.find((f) => f.p.start.identity === 0)!;
+  } else {
+    return data.filter((f) => f.p.start.elementId === id);
+  }
 }

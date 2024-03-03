@@ -1,15 +1,33 @@
-import cytoscape from "cytoscape";
+import cytoscape, { ElementDefinition, ElementsDefinition } from "cytoscape";
 import { getInitData, containerName } from "./initial";
 import { IResponseBody } from "./models/i-response-body";
 
 customElements.define(
   "graph-element",
   class extends HTMLElement {
+    cy!: cytoscape.Core;
+
     async connectedCallback() {
-      const response: IResponseBody[] = await getInitData();
+      const response: IResponseBody | IResponseBody[] = await getInitData();
       const container = this.createContainerElement();
-      const elements = this.createElements(response);
-      cytoscape({
+      const elements:
+        | ElementsDefinition
+        | ElementDefinition[]
+        | Promise<ElementsDefinition>
+        | Promise<ElementDefinition[]>
+        | undefined = {
+        nodes: [],
+        edges: [],
+      };
+      if (!Array.isArray(response)) {
+        elements.nodes.push({
+          data: {
+            id: response.p.start.elementId,
+            ...response.p.start,
+          },
+        });
+      }
+      this.cy = cytoscape({
         container,
         elements,
         style: [
@@ -44,41 +62,6 @@ customElements.define(
       container.setAttribute("id", containerName);
       this.appendChild(container);
       return container;
-    }
-
-    createElements(body: IResponseBody[]) {
-      const result: any[] = [];
-      body.forEach((item: IResponseBody) => {
-        const startNode = item.p.start;
-        const hasStartNode = result.find((f) => f.id === startNode.elementId);
-        if (hasStartNode === undefined || !hasStartNode) {
-          result.push({
-            data: {
-              id: startNode.elementId,
-              ...startNode,
-            },
-          });
-        }
-        const endNode = item.p.end;
-        const hasEndNode = result.find((f) => f.id === endNode.elementId);
-        if (hasEndNode === undefined || !hasEndNode) {
-          result.push({
-            data: { id: endNode.elementId, ...endNode },
-          });
-        }
-        item.p.segments.forEach((segment) => {
-          result.push({
-            data: {
-              id: segment.relationship.elementId,
-              source: segment.relationship.startNodeElementId,
-              target: segment.relationship.endNodeElementId,
-              type: segment.relationship.type,
-              properties: segment.relationship.properties,
-            },
-          });
-        });
-      });
-      return result;
     }
   }
 );
