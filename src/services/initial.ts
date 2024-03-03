@@ -1,4 +1,4 @@
-import { IResponseBody } from "./models/i-response-body";
+import { IResponseBody } from "../models/i-response-body";
 
 export const containerName = "graph_container";
 

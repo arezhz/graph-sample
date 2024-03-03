@@ -1,11 +1,18 @@
 import cytoscape, { ElementDefinition, ElementsDefinition } from "cytoscape";
-import { getInitData, containerName } from "./initial";
+import { getInitData, containerName } from "./services/initial";
 import { IResponseBody } from "./models/i-response-body";
+import { UtilityService } from "./services/utility";
 
 customElements.define(
   "graph-element",
   class extends HTMLElement {
     cy!: cytoscape.Core;
+    utlityService;
+
+    constructor() {
+      super();
+      this.utlityService = new UtilityService();
+    }
 
     async connectedCallback() {
       const response: IResponseBody | IResponseBody[] = await getInitData();
