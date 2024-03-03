@@ -3,10 +3,10 @@ import cytoscape, {
   ElementsDefinition,
   Stylesheet,
 } from "cytoscape";
-import { getInitData, containerName } from "./services/initial";
-import { IResponseBody } from "./models/i-response-body";
-import { UtilityService } from "./services/utility";
-import graphStyles from "./services/styles";
+import { getInitData, containerName } from "./app/services/initial";
+import { IResponseBody } from "./app/models/i-response-body";
+import { UtilityService } from "./app/services/utility";
+import graphStyles from "./app/services/styles";
 
 customElements.define(
   "graph-element",
@@ -42,6 +42,7 @@ customElements.define(
             ),
             ...response.p.start,
           },
+          style: this.utlityService.getNodeStyle(response.p.start.labels[0])
         });
       }
       this.cy = cytoscape({

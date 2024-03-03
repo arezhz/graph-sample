@@ -18,5 +18,26 @@ export class UtilityService {
         return data.id;
     }
   }
+
+
+  getNodeStyle(type: NodeLabelEnum) {
+    switch (type) {
+      case "Person":
+        return {
+          "background-image": "src/assets/person.png",
+          "background-fit": "cover cover",
+        };
+      // case "Country":
+      //   return data.name;
+      // case "Address":
+      //   return data.address;
+      // case "SIMCard":
+      //   return data.number;
+      // case "Sheba":
+      //   return data.bank;
+      // case "SocialAccount":
+      //   return data.id;
+    }
+  }
 }
 
