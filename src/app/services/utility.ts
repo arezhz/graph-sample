@@ -25,7 +25,6 @@ export class UtilityService {
       case "Person":
         return {
           "background-image": "src/assets/person.png",
-          "background-fit": "cover cover",
         };
       // case "Country":
       //   return data.name;
