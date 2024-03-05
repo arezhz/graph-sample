@@ -8,6 +8,7 @@ import { IResponseBody } from "./app/models/i-response-body";
 import { UtilityService } from "./app/services/utility";
 import graphStyles from "./app/services/styles";
 import cxtmenu from "cytoscape-cxtmenu";
+import cola from 'cytoscape-cola';
 
 customElements.define(
   "graph-element",
@@ -19,6 +20,7 @@ customElements.define(
       super();
       this.utlityService = new UtilityService();
       cytoscape.use(cxtmenu);
+      cytoscape.use(cola);
     }
 
     async connectedCallback() {
@@ -54,7 +56,7 @@ customElements.define(
         elements,
         style: graphStyles as unknown as Stylesheet[],
         layout: {
-          name: "cose",
+          name: 'cola',
         },
       });
 
@@ -64,7 +66,7 @@ customElements.define(
         commands: [
           {
             content: "Expand",
-            select: function (ele) {
+            select: function (ele: any) {
               _self.expandSubNodes(ele.id());
             },
           },
@@ -100,7 +102,7 @@ customElements.define(
       )) as IResponseBody[];
       if (response.length) {
         const graphBody: any[] = [];
-        response.forEach((item, index) => {
+        response.forEach((item) => {
           graphBody.push({
             group: "nodes",
             data: {
@@ -111,7 +113,7 @@ customElements.define(
               ),
               ...item.p.end,
             },
-            // position: { x: 100 * index + 1, y: 100 * index + 1 },
+            
             style: this.utlityService.getNodeStyle(item.p.end.labels[0]),
           });
 
@@ -128,13 +130,16 @@ customElements.define(
             });
           });
         });
-        this.cy.stop();
+        // this.cy.stop();
         this.cy.add(graphBody);
         this.cy
-          .layout({
-            name: "cose",
-          })
-          .run();
+          .makeLayout({
+            name: "cola",
+            ready: e => {
+                e.cy.fit()
+                e.cy.center()
+            }
+        }).run();
       }
     }
   }
