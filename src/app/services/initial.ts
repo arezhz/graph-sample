@@ -1,6 +1,7 @@
 import { IResponseBody } from "../models/i-response-body";
 
-export const containerName = "graph_container";
+export const graphContainerName = "graph_container";
+export const graphMapContainerName = "graph_map_container";
 
 export async function getInitData(
   id?: string

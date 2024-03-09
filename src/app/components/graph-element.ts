@@ -3,7 +3,7 @@ import cytoscape, {
   ElementsDefinition,
   Stylesheet,
 } from "cytoscape";
-import { getInitData, containerName } from "../../app/services/initial";
+import { getInitData, graphContainerName } from "../../app/services/initial";
 import { IResponseBody } from "../../app/models/i-response-body";
 import { UtilityService } from "../../app/services/utility";
 import graphStyles from "../../app/services/styles";
@@ -26,7 +26,10 @@ export default customElements.define(
     async connectedCallback() {
       const _self = this;
       const response: IResponseBody | IResponseBody[] = await getInitData();
-      const container = this.createContainerElement();
+      debugger
+      const container =
+        this.utlityService.createContainerElement(graphContainerName);
+      this.appendChild(container);
       const elements:
         | ElementsDefinition
         | ElementDefinition[]
@@ -90,13 +93,6 @@ export default customElements.define(
           },
         ],
       });
-    }
-
-    createContainerElement() {
-      const container = document.createElement("div");
-      container.setAttribute("id", containerName);
-      this.appendChild(container);
-      return container;
     }
 
     async expandSubNodes(id: string) {

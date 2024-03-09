@@ -1,5 +1,7 @@
+import cytoscape from "cytoscape";
+import { graphMapContainerName } from "../services/initial";
 import { UtilityService } from "../services/utility";
-import leaflet from 'cytoscape-leaf';
+import leaflet from "cytoscape-leaf";
 
 export default customElements.define(
   "graph-leaflet",
@@ -10,12 +12,14 @@ export default customElements.define(
     constructor() {
       super();
       this.utlityService = new UtilityService();
-      cytoscape.use( leaflet );
+      cytoscape.use(leaflet);
     }
 
     connectedCallback() {
-      const container = document.createElement("div");
-      container.setAttribute("id", "testttttt");
+      debugger
+      const container = this.utlityService.createContainerElement(
+        graphMapContainerName
+      );
       this.appendChild(container);
     }
   }

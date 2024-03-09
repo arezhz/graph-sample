@@ -127,4 +127,10 @@ export class UtilityService {
       //   return data.id;
     }
   }
+
+   createContainerElement(id: string) {
+      const container = document.createElement("div");
+      container.setAttribute("id", id);
+      return container;
+    }
 }
