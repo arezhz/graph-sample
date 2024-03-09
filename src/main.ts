@@ -8,7 +8,7 @@ import { IResponseBody } from "./app/models/i-response-body";
 import { UtilityService } from "./app/services/utility";
 import graphStyles from "./app/services/styles";
 import cxtmenu from "cytoscape-cxtmenu";
-import cola from 'cytoscape-cola';
+import cola from "cytoscape-cola";
 
 customElements.define(
   "graph-element",
@@ -47,7 +47,7 @@ customElements.define(
             ),
             ...response.p.start,
           },
-          style: this.utlityService.getNodeStyle(response.p.start.labels[0]),
+          style: this.utlityService.getNodeStyle(response.p.start.labels[0], response.p.start.properties),
         });
       }
 
@@ -56,12 +56,12 @@ customElements.define(
         elements,
         style: graphStyles as unknown as Stylesheet[],
         layout: {
-          name: 'cola',
+          name: "cose",
         },
       });
 
       this.cy.cxtmenu({
-        selector: "node, edge",
+        selector: "node",
 
         commands: [
           {
@@ -113,8 +113,8 @@ customElements.define(
               ),
               ...item.p.end,
             },
-            
-            style: this.utlityService.getNodeStyle(item.p.end.labels[0]),
+
+            style: this.utlityService.getNodeStyle(item.p.end.labels[0], item.p.end.properties),
           });
 
           item.p.segments.forEach((segment) => {
@@ -135,11 +135,12 @@ customElements.define(
         this.cy
           .makeLayout({
             name: "cola",
-            ready: e => {
-                e.cy.fit()
-                e.cy.center()
-            }
-        }).run();
+            ready: (e: cytoscape.LayoutEventObject) => {
+              e.cy.fit();
+              e.cy.center();
+            },
+          })
+          .run();
       }
     }
   }

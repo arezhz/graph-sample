@@ -1,8 +1,10 @@
+import { BanksEnum } from "../enums/banks.enum";
+
 export interface IProperties {
   address?: string;
   amount?: string;
   bank?: string;
-  bank_code?: string;
+  bank_code?: BanksEnum;
   birth_date?: string;
   date?: string;
   desc?: string;
