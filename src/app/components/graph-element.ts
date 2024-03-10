@@ -62,7 +62,7 @@ export default customElements.define(
         elements,
         style: graphStyles as unknown as Stylesheet[],
         layout: {
-          name: "cose",
+          name: "cola",
         },
       });
 
