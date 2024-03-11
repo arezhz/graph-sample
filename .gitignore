@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+public/osm-2020-02-10-v3.11_asia_iran.mbtiles
 *.local
 
 # Editor directories and files

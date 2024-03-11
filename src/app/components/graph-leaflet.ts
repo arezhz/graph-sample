@@ -8,8 +8,8 @@ import { UtilityService } from "../services/utility";
 import leaflet from "cytoscape-leaf";
 import { NodeLabelEnum } from "../enums/node-label.enum";
 import { cyLeafletStyle } from "../../app/services/styles";
-import 'leaflet/dist/leaflet.css';
-
+import "leaflet/dist/leaflet.css";
+import "leaflet-tilelayer-geojson"
 export default customElements.define(
   "graph-leaflet",
   class extends HTMLElement {
@@ -22,7 +22,7 @@ export default customElements.define(
       cytoscape.use(leaflet);
     }
 
-    connectedCallback() {
+    async connectedCallback() {
       const container = this.utlityService.createContainerElement(
         graphMapContainerName
       );
@@ -44,8 +44,8 @@ export default customElements.define(
             data: {
               id: "a",
               name: "test a",
-              lat: 43.662402,
-              lng: -79.38891,
+              lat: 35.790817,
+              lng: 51.416221,
             },
             style: this.utlityService.getNodeStyle(NodeLabelEnum.Person),
           },
@@ -54,8 +54,8 @@ export default customElements.define(
             data: {
               id: "b",
               name: "test b",
-              lat: 43.662502,
-              lng: -79.38881,
+              lat: 35.703684,
+              lng: 51.147473,
             },
             style: this.utlityService.getNodeStyle(NodeLabelEnum.Person),
           },
@@ -86,21 +86,16 @@ export default customElements.define(
         container: document.getElementById("cy-leaflet"),
       });
 
-      // leaf.map.removeLayer(leaf.defaultTileLayer);
+      leaf.map.removeLayer(leaf.defaultTileLayer);
 
-      // (window as any).map = leaf.map;
-      // (window as any).L = leaflet.L;
-
+      (window as any).map = leaf.map;
+      (window as any).L = leaf.L;
+      // const response = await fetch("../public/iran.json");
       // // // set your own tiles, e.g. carto
-      // leaflet.L.tileLayer(
-      //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      //   {
-      //     attribution:
-      //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      //     subdomains: "abcd",
-      //     maxZoom: 19,
-      //   }
-      // ).addTo(leaf.map);
+      // leaf.L.tileLayer('src/asstes/osm-2020-02-10-v3.11_asia_iran.mbtiles', {
+			// 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+			// }).addTo(leaf.map);x
+      // leaf.L.tileLayer.GeoJSON('../../../public/iran.json').addTo(leaf.map);
     }
   }
 );
