@@ -8,6 +8,8 @@ import { UtilityService } from "../services/utility";
 import leaflet from "cytoscape-leaf";
 import { NodeLabelEnum } from "../enums/node-label.enum";
 import { cyLeafletStyle } from "../../app/services/styles";
+import 'leaflet/dist/leaflet.css';
+
 export default customElements.define(
   "graph-leaflet",
   class extends HTMLElement {
@@ -84,21 +86,21 @@ export default customElements.define(
         container: document.getElementById("cy-leaflet"),
       });
 
-      leaf.map.removeLayer(leaf.defaultTileLayer);
+      // leaf.map.removeLayer(leaf.defaultTileLayer);
 
-      (window as any).map = leaf.map;
-      (window as any).L = leaflet.L;
+      // (window as any).map = leaf.map;
+      // (window as any).L = leaflet.L;
 
-      // // set your own tiles, e.g. carto
-      leaflet.L.tileLayer(
-        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: "abcd",
-          maxZoom: 19,
-        }
-      ).addTo(leaf.map);
+      // // // set your own tiles, e.g. carto
+      // leaflet.L.tileLayer(
+      //   "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      //   {
+      //     attribution:
+      //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      //     subdomains: "abcd",
+      //     maxZoom: 19,
+      //   }
+      // ).addTo(leaf.map);
     }
   }
 );
