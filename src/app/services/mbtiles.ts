@@ -1,4 +1,4 @@
-import initSqlJs from "sql.js";
+import * as initSqlJs from "sql.js";
 // import leaflet from "cytoscape-leaf";
 
 // const L = leaflet;
@@ -191,14 +191,14 @@ export default function (L: any) {
     _openDB: async function (buffer: ArrayBuffer) {
       try {
         debugger;
-        const SQL = await initSqlJs({
-          locateFile: (file) => {
-            debugger;
-            return `https://sql.js.org/dist/${file}`
-          },
-        });
+        // const SQL = await initSqlJs({
+        //   locateFile: (file) => {
+        //     debugger;
+        //     return `https://sql.js.org/dist/${file}`
+        //   },
+        // });
         debugger;
-        this._db = new SQL.Database(new Uint8Array(buffer));
+        this._db = new initSqlJs.Database(new Uint8Array(buffer));
         this._stmt = this._db.prepare(
           "SELECT tile_data FROM tiles WHERE zoom_level = :z AND tile_column = :x AND tile_row = :y"
         );

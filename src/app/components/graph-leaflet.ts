@@ -106,8 +106,7 @@ export default customElements.define(
       // leaf.tileLayer
       //   .mbtiles("../../../public/osm-2020-02-10-v3.11_asia_iran.mbtiles")
       //   .addTo(leaf.map);
-
-      // leaf.tileLayer.mbtiles = mbTiles(
+      // const a = mbTiles(
       //   "../../../public/osm-2020-02-10-v3.11_asia_iran.mbtiles",
       //   {
       //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
