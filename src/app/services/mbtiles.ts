@@ -39,7 +39,7 @@ export default function (L: any) {
 
         // this._db.run(rawQuery)
         console.log(this._db.exec("select * from map"));
-        
+
         this._stmt = this._db.prepare(
           "SELECT tile_column FROM map WHERE zoom_level = :z AND tile_column = :x AND tile_row = :y"
         );
