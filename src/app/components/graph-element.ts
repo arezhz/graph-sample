@@ -26,11 +26,10 @@ export default customElements.define(
     async connectedCallback() {
       const _self = this;
       const response: IResponseBody | IResponseBody[] = await getInitData();
-      debugger
       const container =
         this.utlityService.createContainerElement(graphContainerName);
       this.appendChild(container);
-      const elements:
+      let elements:
         | ElementsDefinition
         | ElementDefinition[]
         | Promise<ElementsDefinition>
@@ -55,14 +54,18 @@ export default customElements.define(
             response.p.start.properties
           ),
         });
+      } else {
+        elements = {
+          ...this.createNodes(response),
+        };
       }
-
+debugger
       this.cy = cytoscape({
         container,
         elements,
         style: graphStyles as unknown as Stylesheet[],
         layout: {
-          name: "cola",
+          name: "circle",
         },
       });
 
@@ -144,6 +147,77 @@ export default customElements.define(
           })
           .run();
       }
+    }
+
+    createNodes(data: IResponseBody[]): ElementsDefinition {
+      const result: ElementsDefinition = {
+        nodes: [],
+        edges: [],
+      };
+      data.forEach((item) => {
+        const hasStartNode = this.hasNodeHandler(
+          item.p.start.elementId,
+          result
+        );
+        if (hasStartNode) {
+          result.nodes.push({
+            group: "nodes",
+            data: {
+              id: item.p.start.elementId,
+              name: this.utlityService.getNodeName(
+                item.p.start.labels[0],
+                item.p.start.properties
+              ),
+              ...item.p.start,
+            },
+
+            style: this.utlityService.getNodeStyle(
+              item.p.start.labels[0],
+              item.p.start.properties
+            ),
+          });
+        }
+
+        const hasEndNode = this.hasNodeHandler(item.p.end.elementId, result);
+        if (hasEndNode) {
+          result.nodes.push({
+            group: "nodes",
+            data: {
+              id: item.p.end.elementId,
+              name: this.utlityService.getNodeName(
+                item.p.end.labels[0],
+                item.p.end.properties
+              ),
+              ...item.p.end,
+            },
+
+            style: this.utlityService.getNodeStyle(
+              item.p.end.labels[0],
+              item.p.end.properties
+            ),
+          });
+        }
+
+        item.p.segments.forEach((segment) => {
+          result.edges.push({
+            group: "edges",
+            data: {
+              id: segment.relationship.elementId,
+              source: segment.relationship.startNodeElementId,
+              target: segment.relationship.endNodeElementId,
+              type: segment.relationship.type,
+              properties: segment.relationship.properties,
+            },
+          });
+        });
+      });
+      return result;
+    }
+
+    hasNodeHandler(id: string, list: ElementsDefinition) {
+      const hasStartNode = list.nodes.find((f) => f.data["id"] === id);
+
+      return !hasStartNode;
     }
   }
 );
