@@ -22,16 +22,12 @@ export default function (L: any) {
       return L.TileLayer.prototype.initialize.call(this, "", options);
     },
 
-    _openDB: async function (buffer: ArrayBuffer) {
-      try {
-        const sqlPromise = await initSqlJs({
-          locateFile: (file) => `/src/assets/sql/${file}`,
-        });
-        debugger;
-        const [SQL, buf] = await Promise.all([sqlPromise, buffer]);
-        const x = new Uint8Array(buf);
-
-        this._db = new SQL.Database(x);
+    _openDB: function (buffer: ArrayBuffer) {
+      debugger
+      initSqlJs({
+        locateFile: (file) => `/src/assets/sql/${file}`,
+      }).then((SQL) => {
+        this._db = new SQL.Database(new Uint8Array(buffer));
         // const rawQuery = "CREATE TABLE images (tile_id TEXT, tile_data BLOB); \
         // CREATE TABLE map (zoom_level INTEGER,tile_column INTEGER,tile_row INTEGER,tile_id TEXT); \
         // CREATE TABLE metadata (name TEXT, value TEXT); \
@@ -80,14 +76,7 @@ export default function (L: any) {
         // Fired when the database has been loaded, parsed, and ready for queries
         this.fire("databaseloaded");
         this._databaseIsLoaded = true;
-      } catch (ex) {
-        // 🍂event databaseloaded
-        // Fired when the database could not load for any reason. Might contain
-        // an `error` property describing the error.
-        console.log(ex);
-
-        this.fire("databaseerror", { error: ex });
-      }
+      });
     },
 
     createTile: function (coords: any, done: any) {
