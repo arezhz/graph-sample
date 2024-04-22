@@ -12,6 +12,7 @@ dist
 dist-ssr
 src/assets/osm-2020-02-10-v3.11_asia_iran.mbtiles
 src/assets/sql
+src/assets/outDir
 *.local
 
 # Editor directories and files

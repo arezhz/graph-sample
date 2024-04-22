@@ -23,11 +23,13 @@ export default function (L: any) {
     },
 
     _openDB: function (buffer: ArrayBuffer) {
-      debugger
+      debugger;
       initSqlJs({
         locateFile: (file) => `/src/assets/sql/${file}`,
       }).then((SQL) => {
-        this._db = new SQL.Database(new Uint8Array(buffer));
+        const x = new Uint8Array(buffer);
+        this._db = new SQL.Database(x as any);
+        debugger;
         // const rawQuery = "CREATE TABLE images (tile_id TEXT, tile_data BLOB); \
         // CREATE TABLE map (zoom_level INTEGER,tile_column INTEGER,tile_row INTEGER,tile_id TEXT); \
         // CREATE TABLE metadata (name TEXT, value TEXT); \
@@ -35,7 +37,7 @@ export default function (L: any) {
 
         // this._db.run(rawQuery)
         console.log(this._db.exec("select * from map"));
-
+        debugger;
         this._stmt = this._db.prepare(
           "SELECT tile_column FROM map WHERE zoom_level = :z AND tile_column = :x AND tile_row = :y"
         );

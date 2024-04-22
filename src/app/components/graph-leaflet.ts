@@ -9,8 +9,13 @@ import leaflet from "cytoscape-leaf";
 import { NodeLabelEnum } from "../enums/node-label.enum";
 import { cyLeafletStyle } from "../../app/services/styles";
 import "leaflet/dist/leaflet.css";
-import mbTiles from "../services/mbtiles";
+// import mbTiles from "../services/mbtiles";
 
+// import * as protomaps from "protomaps";
+
+// import { vectorGrid } from "leaflet"; 'leaflet.vectorgrid'
+
+import vectorTileLayer from "leaflet-vector-tile-layer";
 export default customElements.define(
   "graph-leaflet",
   class extends HTMLElement {
@@ -88,35 +93,8 @@ export default customElements.define(
       });
 
       leaf.map.removeLayer(leaf.defaultTileLayer);
-
-      (window as any).map = leaf.map;
-      (window as any).L = leaf;
-
-      leaf.L = mbTiles(leaf.L);
-      leaf.L.tileLayer.mbtiles = new leaf.L.TileLayer.MBTiles(
-        "/src/asstes/osm-2020-02-10-v3.11_asia_iran.mbtiles",
-        // "/src/assets/sql/sql.db",
-       {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-       }
-      );
-      leaf.L.tileLayer.mbtiles.addTo(leaf.map)
-
-      // const response = await fetch("../public/iran.json");
-      // // // set your own tiles, e.g. carto
-      // leaf.L.tileLayer('src/asstes/osm-2020-02-10-v3.11_asia_iran.mbtiles', {
-      // 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      // }).addTo(leaf.map);x
-      // leaf.tileLayer
-      //   .mbtiles("../../../public/osm-2020-02-10-v3.11_asia_iran.mbtiles")
-      //   .addTo(leaf.map);
-      // const a = mbTiles(
-      //   "../../../public/osm-2020-02-10-v3.11_asia_iran.mbtiles",
-      //   {
-      //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      //   }
-      // );
-      // leaf.tileLayer.mbtiles.addTo(leaf.map)
+      const a = leaf.L.tileLayer('/src/assets/outDir/{z}/{x}/{y}.png');
+      a.addTo(leaf.map);
     }
   }
 );
