@@ -59,7 +59,7 @@ export default customElements.define(
           ...this.createNodes(response),
         };
       }
-debugger
+      
       this.cy = cytoscape({
         container,
         elements,
